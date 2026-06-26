@@ -8,6 +8,7 @@ import {
     Select,
     TextField,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function SearchFilterToolbar({
     search = "",
@@ -21,36 +22,67 @@ export default function SearchFilterToolbar({
     onStatusChange,
     onButtonClick,
 }) {
+    const [draftSearch, setDraftSearch] = useState(search);
+
+    useEffect(() => {
+        setDraftSearch(search);
+    }, [search]);
+
+    const submitSearch = () => {
+        onSearchChange?.(draftSearch);
+    };
+
     return (
         <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="grid gap-4 md:grid-cols-[1fr_270px_auto] md:items-end">
-                <div>
+                <div className="md:border-r md:border-slate-200 md:pr-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-600">
                         {searchLabel}
                     </label>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        value={search}
-                        placeholder={searchPlaceholder}
-                        onChange={(event) =>
-                            onSearchChange?.(event.target.value)
-                        }
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon
-                                        fontSize="small"
-                                        sx={{ color: "#9ca3af" }}
-                                    />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                        <TextField
+                            fullWidth
+                            size="small"
+                            value={draftSearch}
+                            placeholder={searchPlaceholder}
+                            onChange={(event) =>
+                                setDraftSearch(event.target.value)
+                            }
+                            onKeyDown={(event) => {
+                                if (event.key === "Enter") {
+                                    event.preventDefault();
+                                    submitSearch();
+                                }
+                            }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon
+                                            fontSize="small"
+                                            sx={{ color: "#9ca3af" }}
+                                        />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <Button
+                            variant="outlined"
+                            startIcon={<SearchIcon />}
+                            onClick={submitSearch}
+                            sx={{
+                                height: 40,
+                                minWidth: 110,
+                                textTransform: "none",
+                                fontWeight: 700,
+                            }}
+                        >
+                            Search
+                        </Button>
+                    </div>
                 </div>
 
-                <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-600">
+                <div className="md:border-r md:pr-4 md:border-slate-200">
+                    <label className="mb-2 block text-sm font-semibold text-slate-600 ">
                         {statusLabel}
                     </label>
                     <FormControl fullWidth size="small">
