@@ -21,7 +21,7 @@ class LaptopController extends Controller
 
         $search = $validated['search'] ?? null;
         $status = $validated['status'] ?? null;
-        $perPage = $validated['per_page'] ?? 10;
+        $per_page = $validated['per_page'] ?? 10;
 
         $laptops = Laptop::query()
             ->when($search, function($query, $search){
@@ -34,7 +34,7 @@ class LaptopController extends Controller
                 $query->where('status', $status);
             })
             ->latest()
-            ->paginate($perPage)
+            ->paginate($per_page)
             ->withQueryString();
 
         return Inertia::render('Laptop/Index', [
@@ -42,7 +42,7 @@ class LaptopController extends Controller
             'filters' => [
                 'search' => $search,
                 'status' => $status,
-                'per_page' => $perPage,
+                'per_page' => $per_page,
             ],
             'statuses' => LaptopStatus::values(),
         ]);
@@ -89,7 +89,6 @@ class LaptopController extends Controller
     {
         return Inertia::render('Laptop/Edit', [
             'laptop' => $laptop,
-            'statuses' => LaptopStatus::values(),
         ]);
     }
 
