@@ -25,7 +25,7 @@ class KembalikanPeminjamanRequest extends FormRequest
             : $peminjaman;
 
         $this->merge([
-            'peminjaman_id' => (int) $peminjamanId,
+            'id' => (int) $peminjamanId,
         ]);
     }
     /**
@@ -37,8 +37,8 @@ class KembalikanPeminjamanRequest extends FormRequest
     {
         return [
             'id' => [
-                'required', 
-                'integer', 
+                'required',
+                'integer',
                 Rule::exists('peminjaman', 'id')
                     ->whereNull('tanggal_kembali')],
         ];
