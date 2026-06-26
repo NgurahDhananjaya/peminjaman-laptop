@@ -12,7 +12,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('laptop', LaptopController::class);
-Route::resource('peminjaman', PeminjamanController::class);
+Route::resource('peminjaman', PeminjamanController::class)
+    ->only(['index', 'create', 'store', 'show']);
 
 Route::patch('/peminjaman/{peminjaman}/kembalikan', [PeminjamanController::class, 'kembalikan'])
     ->name('peminjaman.kembalikan');
