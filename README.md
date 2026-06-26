@@ -1,59 +1,271 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laptop Loan Management
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple web application for managing office laptops and recording laptop loan transactions. This project was built as part of a programmer test case study.
 
-## About Laravel
+The application allows users to manage laptop assets, create loan records, mark laptops as returned, and monitor laptop availability through a simple dashboard.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Dashboard summary
+    - Total laptops
+    - Available laptops
+    - Borrowed laptops
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laptop Management
+    - List laptops
+    - Add new laptop
+    - Edit laptop data
+    - Delete laptop
+    - Search laptops by code or name
+    - Filter laptops by status
 
-## Learning Laravel
+- Loan Management
+    - Create laptop loan transaction
+    - Select only available laptops for borrowing
+    - Automatically update laptop status to `Dipinjam` when borrowed
+    - Mark loan as returned
+    - Automatically update laptop status back to `Tersedia` when returned
+    - View loan history
+    - Search loan records by borrower name, laptop code, or laptop name
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Tech Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Laravel
+- Laravel Breeze
+- Inertia.js
+- React
+- PostgreSQL
+- Tailwind CSS
+- Material UI
 
-## Laravel Sponsors
+## Requirements
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Before running this project, make sure you have installed:
 
-### Premium Partners
+- PHP
+- Composer
+- Node.js and npm
+- PostgreSQL
+- Laravel supported local development environment, such as Laragon, Laravel Herd, or similar
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Installation
 
-## Contributing
+Clone the repository:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone <repository-url>
+cd peminjaman-item
+```
 
-## Code of Conduct
+Install PHP dependencies:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+Install JavaScript dependencies:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+npm install
+```
+
+Copy the environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+## Database Configuration
+
+Create a PostgreSQL database first, then update the `.env` file.
+
+Example:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=peminjaman_item
+DB_USERNAME=postgres
+DB_PASSWORD=
+```
+
+Run database migration:
+
+```bash
+php artisan migrate
+```
+
+run seeder:
+
+```bash
+php artisan db:seed --class=LaptopLoanSeeder
+```
+
+Or if you want to reset the database from scratch:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+## Running the Application
+
+Run Laravel development server:
+
+```bash
+php artisan serve
+```
+
+In another terminal, run Vite:
+
+```bash
+npm run dev
+```
+
+Open the application in your browser:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Alternative Development Command
+
+Laravel may provide a combined development command:
+
+```bash
+composer run dev
+```
+
+However, on Windows, this command may fail if Laravel Pail requires the `pcntl` extension. If that happens, run the application using two separate terminals instead:
+
+```bash
+php artisan serve
+```
+
+and:
+
+```bash
+npm run dev
+```
+
+## Main Routes
+
+| Page          | Route Name              | Description                |
+| ------------- | ----------------------- | -------------------------- |
+| Dashboard     | `dashboard`             | Shows laptop summary       |
+| Laptop List   | `laptop.index`          | Shows all laptops          |
+| Create Laptop | `laptop.create`         | Form to add a new laptop   |
+| Edit Laptop   | `laptop.edit`           | Form to update laptop data |
+| Loan List     | `peminjaman.index`      | Shows loan history         |
+| Create Loan   | `peminjaman.create`     | Form to create a new loan  |
+| Return Laptop | `peminjaman.kembalikan` | Marks a loan as returned   |
+
+## Project Structure
+
+Main frontend files are located in:
+
+```text
+resources/js/
+├── Components/
+├── Enums/
+├── Layouts/
+└── Pages/
+```
+
+Main backend files include:
+
+```text
+app/
+├── Enums/
+├── Http/
+│   ├── Controllers/
+│   └── Requests/
+└── Models/
+```
+
+Database migrations are located in:
+
+```text
+database/migrations/
+```
+
+Routes are located in:
+
+```text
+routes/web.php
+```
+
+## Database Tables
+
+### Laptop
+
+Stores laptop asset data.
+
+Main fields:
+
+- `id`
+- `kode`
+- `nama`
+- `spesifikasi`
+- `status`
+
+Status values:
+
+- `Tersedia`
+- `Dipinjam`
+
+### Peminjaman
+
+Stores laptop loan transaction data.
+
+Main fields:
+
+- `id`
+- `laptop_id`
+- `nama_peminjam`
+- `tanggal_pinjam`
+- `tanggal_kembali`
+
+The `tanggal_kembali` field is nullable. If it is still empty, the laptop is considered currently borrowed.
+
+## Application Flow
+
+### Borrowing a Laptop
+
+1. User selects an available laptop.
+2. User enters borrower name and loan date.
+3. System creates a loan record.
+4. System updates the selected laptop status to `Dipinjam`.
+
+### Returning a Laptop
+
+1. User clicks the return action on an active loan.
+2. System fills `tanggal_kembali` with the current date.
+3. System updates the related laptop status back to `Tersedia`.
+
+## Notes
+
+- The project uses Inertia.js, so page navigation is handled through Laravel routes and React pages.
+- The application does not use React Router.
+- Form submission is handled using Inertia form helpers.
+- Frontend validation is kept simple because backend validation is handled by Laravel Form Requests.
+- Tailwind CSS is used for layout and spacing.
+- Material UI is used for fields, buttons, dropdowns, tables, chips, pagination, and icons.
+
+## Build for Production
+
+To build frontend assets for production:
+
+```bash
+npm run build
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is created for assessment and learning purposes.
