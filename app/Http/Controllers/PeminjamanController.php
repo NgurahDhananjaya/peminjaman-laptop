@@ -171,27 +171,4 @@ class PeminjamanController extends Controller
             ->with('success', 'Laptop berhasil dikembalikan.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Peminjaman $Peminjaman)
-    {
-        // 
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Peminjaman $peminjaman)
-    {
-        // 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
